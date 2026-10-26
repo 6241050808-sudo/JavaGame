@@ -26,6 +26,19 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
+      - name: Generate Debug Keystore if missing
+        run: |
+          if [ ! -f debug.keystore ]; then
+            echo "Generating debug.keystore for CI build..."
+            keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+          fi
+
+      - name: Create fallback google-services.json if missing
+        run: |
+          if [ ! -f app/google-services.json ]; then
+            echo '{"project_info":{"project_number":"0","project_id":"retrojar-build","storage_bucket":""},"client":[{"client_info":{"mobilesdk_app_id":"1:0:android:0","android_client_info":{"package_name":"com.aistudio.retrojar.qmvkz"}},"api_key":[{"current_key":""}],"services":{}}],"configuration_version":"1"}' > app/google-services.json
+          fi
+
       - name: Build Debug APK
         run: gradle :app:assembleDebug --stacktrace
 
