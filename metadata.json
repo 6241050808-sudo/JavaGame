@@ -1,0 +1,6 @@
+{
+  "name": "RetroJar",
+  "description": "J2ME Java .jar game emulator with customizable virtual controls, smooth screen emulation, frame interpolation, and resolution upscaling",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
